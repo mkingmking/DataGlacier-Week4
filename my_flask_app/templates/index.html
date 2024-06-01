@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iris Prediction</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> -->
+    
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Predict Iris Species</h1>
+        
+        <!-- Updated Form Structure -->
+        <form method="POST" action="/" class="mt-4" id="predict-form">
+            {{ form.hidden_tag() }} <!-- CSRF protection hidden tag -->
+            <div class="form-group">
+                {{ form.sepal_length.label(class="form-label") }}
+                {{ form.sepal_length(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.sepal_width.label(class="form-label") }}
+                {{ form.sepal_width(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.petal_length.label(class="form-label") }}
+                {{ form.petal_length(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.petal_width.label(class="form-label") }}
+                {{ form.petal_width(class="form-control") }}
+            </div>
+            <button type="submit" class="btn btn-primary">Predict</button>
+        </form>
+
+        <!-- Result Display Section -->
+        {% if prediction %}
+        <div class="alert alert-success mt-4" id="result">
+            Prediction: {{ prediction }}
+        </div>
+        <h2 class="mt-5 text-center">Feature Importances</h2>
+        <img id="feature-importance-plot" src="{{ feature_importance_plot }}" alt="Feature Importance plot" class="img-fluid mt-4">
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('predict-form').addEventListener('submit', function(event) {
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('feature-importance-plot').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
